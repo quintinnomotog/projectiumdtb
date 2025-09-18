@@ -83,7 +83,14 @@ insert into tb_categoria_pessoa (descricao, sigla) values ('Pessoa Física', 'PF
 
 insert into tb_pessoa (id_categoria_pessoa, nome) values (1, 'Kuipeunt Ustes Wyoquelas');
 
-insert into tb_perfil (descricao) values ('Administrador');
+insert into tb_perfil (descricao) values 
+	('Administrador'), 
+	('Gerente de Projetos'),
+	('Cliente'),
+	('Analista de Sistemas'),
+	('Analista de Qualidade'),
+	('Analista de Infraestrutura'),
+	('Analista de Interface');
 
 insert into tb_usuario (usuario, senha) values ('kuipeunt.wyoquelas@projectium.com.br', 'f9c1c5dcf025033fe6b759f378ef0597');
 
@@ -108,18 +115,33 @@ select * from tb_usuario_perfil;
 	Objetivo:  					Modelar a funcionalidade de gerenciador de Projetos
 */
 
+drop table if exists tb_situacao_projeto cascade;
+drop table if exists tb_categoria_projeto cascade;
+drop table if exists tb_projeto cascade;
+
 create table if not exists tb_situacao_projeto (
 	code bigserial not null,
 	code_public varchar(255) not null default gen_random_uuid(),
 	descricao varchar(255) not null,
+	data_criacao timestamp default current_timestamp,
+	data_atualizacao timestamp default current_timestamp,
+	data_delecao timestamp,
+	usuario_operacao varchar(255) null,
+	active boolean not null default true,
+	constraint pk_situacao_projeto primary key (code)
 );
 
 create table if not exists tb_categoria_projeto (
 	code bigserial not null,
 	code_public varchar(255) not null default gen_random_uuid(),
 	descricao varchar(255) not null,
+	data_criacao timestamp default current_timestamp,
+	data_atualizacao timestamp default current_timestamp,
+	data_delecao timestamp,
+	usuario_operacao varchar(255) null,
+	active boolean not null default true,
+	constraint pk_categoria_projeto primary key (code)
 );
-
 
 create table if not exists tb_projeto (
     code bigserial not null,
@@ -131,5 +153,12 @@ create table if not exists tb_projeto (
 	descricao text null,
     data_inicial date not null,
     data_final date not null,
-    constraint pk_projeto primary key (code)
+    data_criacao timestamp default current_timestamp,
+	data_atualizacao timestamp default current_timestamp,
+	data_delecao timestamp,
+	usuario_operacao varchar(255) null,
+	active boolean not null default true,
+    constraint pk_projeto primary key (code),
+    constraint fk_situacao_projeto foreign key (id_situacao_projeto) references tb_situacao_projeto (code),
+    constraint fk_categoria_projeto foreign key (id_categoria_projeto) references tb_categoria_projeto (code)
 );
