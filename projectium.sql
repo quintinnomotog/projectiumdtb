@@ -81,11 +81,11 @@ create table if not exists tb_usuario_perfil (
 -- Inserts
 insert into tb_categoria_pessoa (descricao, sigla) values ('Pessoa Física', 'PF'), ('Pessoa Jurídica', 'PJ');
 
-insert into tb_pessoa (id_categoria_pessoa, nome) values (1, 'José Quintinno');
+insert into tb_pessoa (id_categoria_pessoa, nome) values (1, 'Kuipeunt Ustes Wyoquelas');
 
 insert into tb_perfil (descricao) values ('Administrador');
 
-insert into tb_usuario (usuario, senha) values ('jose.quintinno', 'senha-segura');
+insert into tb_usuario (usuario, senha) values ('kuipeunt.wyoquelas@projectium.com.br', 'f9c1c5dcf025033fe6b759f378ef0597');
 
 insert into tb_usuario_perfil (id_usuario, id_perfil) values (1, 1);
 
