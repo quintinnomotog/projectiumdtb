@@ -3,7 +3,7 @@
 	Nome Fantasia:				Projectium
 	Data: 						18/09/2025
 	Demanda: 					PROJECTIUM20250918121422DTB
-	Objetivo:  					Modelar a funcionalidade de Autenticação
+	Objetivo:  					Modelar a funcionalidade de gerenciador de Autenticação
 */
 
 create extension if not exists pgcrypto;
@@ -99,3 +99,37 @@ select * from tb_perfil;
 select * from tb_usuario;
 
 select * from tb_usuario_perfil;
+
+/**
+	Aplicação:               	SISGEPRO - Sistema Gerenciador de Projetos
+	Nome Fantasia:				Projectium
+	Data: 						18/09/2025
+	Demanda: 					PROJECTIUM20250918003802DTB
+	Objetivo:  					Modelar a funcionalidade de gerenciador de Projetos
+*/
+
+create table if not exists tb_situacao_projeto (
+	code bigserial not null,
+	code_public varchar(255) not null default gen_random_uuid(),
+	descricao varchar(255) not null,
+);
+
+create table if not exists tb_categoria_projeto (
+	code bigserial not null,
+	code_public varchar(255) not null default gen_random_uuid(),
+	descricao varchar(255) not null,
+);
+
+
+create table if not exists tb_projeto (
+    code bigserial not null,
+    code_public uuid not null,
+    id_situacao_projeto serial not null,
+	id_categoria_projeto serial not null,
+    nome varchar(255) not null,
+	sigla varchar(255) not null,
+	descricao text null,
+    data_inicial date not null,
+    data_final date not null,
+    constraint pk_projeto primary key (code)
+);
