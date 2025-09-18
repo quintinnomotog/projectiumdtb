@@ -96,17 +96,6 @@ insert into tb_usuario (usuario, senha) values ('kuipeunt.wyoquelas@projectium.c
 
 insert into tb_usuario_perfil (id_usuario, id_perfil) values (1, 1);
 
--- Consultas
-select * from tb_categoria_pessoa;
-
-select * from tb_pessoa;
-
-select * from tb_perfil;
-
-select * from tb_usuario;
-
-select * from tb_usuario_perfil;
-
 /**
 	Aplicação:               	SISGEPRO - Sistema Gerenciador de Projetos
 	Nome Fantasia:				Projectium
@@ -145,7 +134,7 @@ create table if not exists tb_categoria_projeto (
 
 create table if not exists tb_projeto (
     code bigserial not null,
-    code_public uuid not null,
+    code_public varchar(255) not null default gen_random_uuid(),
     id_situacao_projeto serial not null,
 	id_categoria_projeto serial not null,
     nome varchar(255) not null,
@@ -162,3 +151,20 @@ create table if not exists tb_projeto (
     constraint fk_situacao_projeto foreign key (id_situacao_projeto) references tb_situacao_projeto (code),
     constraint fk_categoria_projeto foreign key (id_categoria_projeto) references tb_categoria_projeto (code)
 );
+
+-- Inserts
+
+insert into 
+	tb_situacao_projeto (descricao)
+values 
+	('Planejamento'), ('Desenvolvimento'), ('Homologação'), ('Cancelado'), ('Pausado'), ('Produção');
+
+insert into 
+	tb_categoria_projeto (descricao)
+values 
+	('Sistema de Software'), ('Modelagem de Banco de Dados'), ('Implantação de Software'), ('Análise de Requisitos'), ('Consultoria de Segurança');
+
+insert into 
+	tb_projeto (id_situacao_projeto, id_categoria_projeto, nome, sigla, descricao, data_inicial, data_final)
+values 
+	(1, 1, 'Sistema Gerenciador de Projetos', 'SISGEPRO', '', '2025-09-18', '2026-09-18');
